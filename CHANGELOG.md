@@ -1,5 +1,48 @@
 # ChangeLog
 
+## 1.1.22
+
+* update:雪碧图版本更新，新增不强制重写宽高的配置
+* fix:生成页面片时去掉空请求
+* update:增加生成页面片中页面片地址注释的配置
+
+## 1.1.21
+
+* update:增加js中获取资源hash的方法
+
+## 1.1.20
+
+* update: 上传组件时，用户不在白名单的警告
+* update: wp上传组件时Autoprefixer
+* update: wp组件索引依赖改为优先索引gb而不是当前模块
+
+## 1.1.19
+
+* update:js模板中公共的组件样式不抽取
+* fix:模板抽离字段错误
+
+## 1.1.18
+
+* fix:修复抽离模板版本号计算的问题
+* update:增加抽取模板时自动抽取css到模板文件中的开关
+* update:server模式支持在js模板中使用 `widget.load` 调用组件
+* update:强制美化开关
+
+## 1.1.17
+
+* update:抽离模板有cmd和jsonp两种模式，默认为jsonp
+* update:抽离模板时增加模板编译
+* fix(lib/build/index.js): 移动tplget到athenaMate后 防止portal_floor_id被跳过渲染
+
+## 1.1.16
+
+* fix: watch gb 下的widget改动bug
+
+## 1.1.15
+
+* update:编译时扫描代码检查页面引用组件中增加当前模块扫描
+* update:组件下载上传功能完善
+
 ## 1.1.14
 
 * update:widget.embed语法

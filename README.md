@@ -491,6 +491,7 @@ module.exports = {
       cssi: '/sinclude/cssi/fd/h5/qwd', // 上传页面片的目录
       assestPrefix: '/fd/h5/qwd', // 发布完静态资源后，静态资源路径
       shtmlPrefix: '/sinclude/cssi/fd/h5/qwd', // 发布完页面片后，静态资源路径
+      shtmlCommentPrefix: '/sinclude/cssi/fd/h5/qwd', // 生成页面片注释中的路径
       shtml: {  //针对服务器的页面片配置
         needCombo: true, // 页面片中链接是否合并
         needTimestamp: true //增加时间戳
@@ -507,6 +508,7 @@ module.exports = {
       cssi: '/export/paipai/resource/sinclude/cssi/fd/h5/hellokity', // 上传页面片的目录
       assestPrefix: '/static/fd/h5/hellokity', // 发布完静态资源后，静态资源路径
       shtmlPrefix: '/sinclude/cssi/fd/h5/hellokity', // 发布完页面片后，静态资源路径
+      shtmlCommentPrefix: '/sinclude/cssi/fd/h5/hellokity', // 生成页面片注释中的路径
       shtml: {  //针对服务器的页面片配置
         needCombo: true, // 页面片中链接是否合并
         needTimestamp: true //增加时间戳
@@ -1004,16 +1006,25 @@ JavaScript代码检查。
 
 资源定位是为了可以自动化将资源引用链接替换成配置好的目标地址。
 
-在 `HTML` 模板中定位使用API
+在 `HTML` 模板中定位使用API `<%= uri() %>`
+
+定位css
 
 ```
 <%= uri('demo.css') %>
 ```
 
-在 `js` 中定位使用API
+定位图片等放在images目录下的资源，必须带上images目录作为标记
+
+```
+<%= uri('images/bg.png') %>
+```
+
+在 `js` 中定位使用API `__uri`
 
 ```
 __uri('demo.css')
+__uri('images/bg.png')
 ```
 
 ### 文件内联
@@ -1048,7 +1059,7 @@ module.exports = {
 ```
 `__inline('demo.css')` 将直接输出组件 `heheda`、`topbar` 的合并样式，并且 `<%= getCSS() %>` 输出的样式表中将不会包含这两个组件样式。
 
-在 `js` 中内联资源使用API
+在 `js` 中内联资源使用API `__inline`
 
 ```
 // 第一个参数是文件名，第二个参数是模块名，如果是当前模块，可省略
@@ -1291,11 +1302,41 @@ h1 { background-image:url(../images/sprite.png); background-position:0 0;}
 }
 ```
 
+配置中 `rootValue` 是控制当前模块全局的 `rem` 开关，如果想要指定某一处图片相关样式使用 `px` 或 `rem` 单位，可以在引用图片的地方通过参数指定，例如
+
+```css
+// 指定使用 `px` 单位
+.a {
+  background-image: url('images/A.png?__sprite=sprite_1&__px');
+}
+
+// 指定使用 `rem` 单位
+.a {
+  background-image: url('images/A.png?__sprite=sprite_1&__rem');
+}
+
+// 使用 `rem` 单位时同时指定自己的 `rootValue`
+.a {
+  background-image: url('images/A.png?__sprite=sprite_1&__rem=20');
+}
+```
+
+配置中 `__widthHeight` 是控制关闭强制替换背景图width和height，例如
+
+```css
+// 强制使用 `__widthHeight` 来关闭width和height替换
+.a {
+  background-image: url('images/A.png?__sprite=sprite_1&__widthHeight');
+  width:10px;
+  height:10px;
+}
+```
+
 ## CONTRIBUTORS
 
-[![luckyadam](https://avatars2.githubusercontent.com/u/1782542?v=3&s=120)](http://diao.li/) | [![Simba Chen](https://avatars2.githubusercontent.com/u/1519030?v=3&s=120)](https://github.com/Simbachen) | [![adamchuan](https://avatars0.githubusercontent.com/u/2565774?v=3&s=120)](https://github.com/adamchuan) | [![Sky Cai](https://avatars3.githubusercontent.com/u/3118988?v=3&s=120)](https://github.com/cnt1992)
-:---:|:---:|:---:|:---:
-[luckyadam](http://diao.li/) | [Simba Chen](https://github.com/Simbachen) | [adamchuan](https://github.com/adamchuan) | [Sky Cai](https://github.com/cnt1992)
+[![luckyadam](https://avatars2.githubusercontent.com/u/1782542?v=3&s=120)](http://diao.li/) | [![Simba Chen](https://avatars2.githubusercontent.com/u/1519030?v=3&s=120)](https://github.com/Simbachen) | [![adamchuan](https://avatars0.githubusercontent.com/u/2565774?v=3&s=120)](https://github.com/adamchuan) | [![Sky Cai](https://avatars3.githubusercontent.com/u/3118988?v=3&s=120)](https://github.com/cnt1992) | [![Manjiz](https://avatars0.githubusercontent.com/u/13447336?v=3&s=120)](https://github.com/Manjiz) | [![panxinwu](https://avatars1.githubusercontent.com/u/1515508?v=3&s=120)](https://github.com/panxinwu) | [![Littly](https://avatars1.githubusercontent.com/u/5780093?v=3&s=120)](https://github.com/Littly)
+:---:|:---:|:---:|:---:|:---:|:---:|:---:
+[luckyadam](http://diao.li/) | [Simba Chen](https://github.com/Simbachen) | [adamchuan](https://github.com/adamchuan) | [Sky Cai](https://github.com/cnt1992) | [Manjiz](https://github.com/Manjiz) | [panxinwu](https://github.com/panxinwu) | [Littly](https://github.com/Littly)
 
 ## LICENCE
 
